@@ -1,7 +1,13 @@
+import { LockKeyholeIcon, MailIcon } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import z from 'zod';
-import { useLogin, useRegister } from '../services/auth-service';
+import {
+  fetchCurrentUser,
+  loginUser,
+  registerUser,
+} from '../services/auth-service';
+import { useAuthStore } from '../stores/use-auth-store';
 
 const registerSchema = z.object({
   name: z
@@ -21,7 +27,7 @@ const loginSchema = registerSchema.pick({
 });
 
 export function AuthForm() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -29,8 +35,7 @@ export function AuthForm() {
     password: '',
   });
   const [errors, setErrors] = useState({});
-  const { mutateAsync: login } = useLogin();
-  const { mutateAsync: register } = useRegister();
+  const { login } = useAuthStore();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,6 +56,7 @@ export function AuthForm() {
     setErrors({});
 
     const schema = isLogin ? loginSchema : registerSchema;
+
     const result = schema.safeParse(formData);
 
     if (!result.success) {
@@ -61,13 +67,16 @@ export function AuthForm() {
 
     const validatedData = result.data;
 
-    // Sugestão
     try {
       if (isLogin) {
-        await login(validatedData);
+        await loginUser(validatedData);
+        const currentUser = await fetchCurrentUser();
+        login(currentUser);
         navigate('/');
       } else {
-        await register(validatedData);
+        await registerUser(validatedData);
+        const currentUser = await fetchCurrentUser();
+        login(currentUser);
         navigate('/');
       }
     } catch (error) {
@@ -122,40 +131,54 @@ export function AuthForm() {
               >
                 E-mail
               </label>
-              <input
-                className="w-full rounded-md bg-white px-4 py-3 text-black transition focus:outline-none focus:ring-2 focus:ring-amber-600 "
-                id="email"
-                name="email"
-                onChange={handleInputChange}
-                placeholder="email@exemplo.com"
-                required
-                type="email"
-                value={formData.email}
-              />
+              <div className="relative flex w-full items-center rounded-md bg-white ">
+                <MailIcon className="absolute left-2" size={16} />
+                <input
+                  className=" h-8 w-full items-center pl-8 text-black text-xs transition focus:outline-none focus:ring-2 focus:ring-amber-600 "
+                  id="email"
+                  name="email"
+                  onChange={handleInputChange}
+                  placeholder="email@exemplo.com"
+                  required
+                  type="email"
+                  value={formData.email}
+                />
+              </div>
+
               {errors.email && (
                 <p className="mt-1 text-red-900 text-xs">{errors.email[0]}</p>
               )}
             </div>
-            <div>
+            <div className="mb-4">
               <label
                 className="mb-2 block font-semibold text-sm"
                 htmlFor="password"
               >
                 Senha
               </label>
-              <input
-                className="w-full rounded-md bg-white px-4 py-3 text-black transition focus:outline-none focus:ring-2 focus:ring-amber-600 "
-                id="password"
-                name="password"
-                onChange={handleInputChange}
-                placeholder="••••••••"
-                required
-                type="password"
-                value={formData.password}
-              />
+              <div className=" relative flex w-full items-center rounded-md bg-white ">
+                <LockKeyholeIcon className="absolute left-2" size={16} />
+                <input
+                  className=" h-8 w-full items-center pl-8 text-black transition focus:outline-none focus:ring-2 focus:ring-amber-600 "
+                  id="password"
+                  name="password"
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  required
+                  type="password"
+                  value={formData.password}
+                />
+              </div>
+
               {errors && (
                 <p className="mt-1 text-red-900 text-xs">{errors.password}</p>
               )}
+              <Link
+                className="flex justify-end pt-1 pr-1 text-right text-sky-700 text-xs underline"
+                to={'/forgot-password'}
+              >
+                Esqueceu a senha?
+              </Link>
             </div>
 
             <button
@@ -179,7 +202,6 @@ export function AuthForm() {
           </form>
         </div>
         <div className=" w-full bg-gradient-to-br from-indigo-500 to-emerald-500 md:w-1/2 md:p-12" />
-
         <div />
       </div>
     </div>
