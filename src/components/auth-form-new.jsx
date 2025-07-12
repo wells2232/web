@@ -1,4 +1,4 @@
-import { LockKeyholeIcon, MailIcon } from 'lucide-react';
+import { CircleUserRoundIcon, LockKeyholeIcon, MailIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import z from 'zod';
@@ -91,35 +91,104 @@ export function AuthForm() {
   return (
     <div className="flex h-[100dvh] w-full items-center justify-center">
       <div className="flex w-full flex-col items-center justify-center">
-        <h1 className="text-center text-3xl">
+        <h1 className="mb-10 text-center text-3xl">
           {isLogin ? 'Entre com sua conta' : 'Criar Conta'}
         </h1>
-        <div className="flex flex-col ">
-          {!isLogin && (
-            <div>
-              <label
-                className="mb-2 block font-semibold text-sm"
-                htmlFor="name"
-              >
-                Nome
-              </label>
-              <input
-                className="bg-white"
-                id="name"
-                name="name"
-                onChange={handleInputChange}
-                placeholder="Seu nome"
-                type="text"
-                value={formData.name}
-              />
-              {errors.name && (
-                <p className="mt-1 text-red-900 text-xs">{errors.name[0]}</p>
+        <form
+          className="flex w-full max-w-lg items-center justify-center px-6"
+          noValidate
+          onSubmit={handleSubmit}
+        >
+          <div className="flex w-full max-w-md flex-col items-center justify-center gap-6">
+            {!isLogin && (
+              <div className="flex w-full flex-col gap-2">
+                <label className="" htmlFor="name">
+                  Nome
+                </label>
+                <div className="relative flex w-full items-center rounded-md ">
+                  <CircleUserRoundIcon className=" absolute left-4" size={24} />
+                  <input
+                    className="w-full max-w-md rounded-md border border-zinc-400 bg-zinc-900 p-4 pl-12"
+                    id="name"
+                    name="name"
+                    onChange={handleInputChange}
+                    placeholder="Seu nome"
+                    type="text"
+                    value={formData.name}
+                  />
+                </div>
+
+                {errors.name && (
+                  <p className="mt-1 text-red-900 text-xs">{errors.name[0]}</p>
+                )}
+              </div>
+            )}
+
+            <div className="flex w-full flex-col gap-2">
+              <label htmlFor="email">Email</label>
+              <div className="relative flex w-full items-center rounded-md">
+                <MailIcon className="absolute left-4" size={24} />
+                <input
+                  className="w-full max-w-md rounded-md border border-zinc-400 bg-zinc-900 in-autofill:bg-zinc-900 p-4 pl-12"
+                  id="email"
+                  name="email"
+                  onChange={handleInputChange}
+                  placeholder="Digite seu e-mail"
+                  type="text"
+                  value={formData.email}
+                />
+              </div>
+              {errors.email && (
+                <p className="mt-1 text-red-900 text-xs">{errors.email[0]}</p>
               )}
             </div>
-          )}
+            <div className="flex w-full flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password">Senha</label>
+                <Link className="text-sm text-zinc-300" to={'/reset-password'}>
+                  Esqueceu a senha?
+                </Link>
+              </div>
+              <div className="relative flex w-full items-center rounded-md">
+                <LockKeyholeIcon className="absolute left-4" size={24} />
+                <input
+                  className="w-full max-w-md rounded-md border border-zinc-400 bg-zinc-900 p-4 pl-12 text-z"
+                  id="password"
+                  name="password"
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  type="password"
+                  value={formData.password}
+                />
+              </div>
+              {errors.password && (
+                <p className="mt-1 text-red-900 text-xs">
+                  {errors.password[0]}
+                </p>
+              )}
+            </div>
+            <button
+              className="mt-6 w-full max-w-md rounded-full border border-zinc-400 bg-white p-4 font-semibold text-black transition-transform hover:scale-103 hover:cursor-pointer"
+              type="submit"
+            >
+              {isLogin ? 'Entrar' : 'Cadastrar'}
+            </button>
+          </div>
+        </form>
+        <div>
+          <p className="mt-6 text-center text-gray-400 text-sm">
+            {isLogin ? 'Não tem uma conta? ' : 'Já tem uma conta? '}
+            <button
+              className=" text-white hover:cursor-pointer hover:font-semibold"
+              onClick={toggleForm}
+              type="button"
+            >
+              {isLogin ? 'Registre-se' : 'Faça login'}
+            </button>
+          </p>
         </div>
       </div>
-      <div className="flex h-full w-full items-center justify-center bg-[url(/auth-bg-2.png)] bg-auto" />
+      <div className="hidden h-full w-full items-center justify-center bg-[url(/auth-bg-2.png)] bg-auto md:block" />
     </div>
   );
 }
