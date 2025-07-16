@@ -17,7 +17,6 @@ export function useInitializeAuth() {
           navigate('/');
         }
       } catch (_err) {
-        // Se der erro (ex: 401, token inválido), garante que o usuário está deslogado
         logout();
       } finally {
         setIsLoading(false);
@@ -25,7 +24,7 @@ export function useInitializeAuth() {
     };
 
     checkUserSession();
-  }, [setUser, logout, navigate]); // Dependências do useEffect
+  }, [setUser, logout, navigate]);
 
   return { isLoading };
 }

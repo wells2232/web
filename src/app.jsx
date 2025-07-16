@@ -1,7 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { useInitializeAuth } from './hooks/use-initialize-auth';
 import { MainLayout } from './layout/main-layout';
-import { AuthPage } from './pages/auth-page';
+import { AuthPage } from './pages/auth/auth-page';
+import { RequestResetPasswordPage } from './pages/auth/request-reset-password';
+import { ResetPasswordPage } from './pages/auth/reset-password-page';
 import { HomePage } from './pages/home-page';
 
 export function App() {
@@ -15,6 +17,7 @@ export function App() {
       </div>
     );
   }
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
@@ -25,6 +28,8 @@ export function App() {
         />
       </Route>
       <Route element={<AuthPage />} path={'/auth'} />
+      <Route element={<RequestResetPasswordPage />} path={'/password/reset'} />
+      <Route element={<ResetPasswordPage />} path={'/reset-password'} />
     </Routes>
   );
 }
