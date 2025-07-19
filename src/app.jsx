@@ -27,7 +27,8 @@ export function App() {
           path="/items/:id"
         />
       </Route>
-      <Route element={<AuthPage />} path={'/auth'} />
+      <Route element={<AuthPage isLogin={true} />} path={'/login'} />
+      <Route element={<AuthPage />} path={'/register'} />
       <Route element={<RequestResetPasswordPage />} path={'/password/reset'} />
       <Route element={<ResetPasswordPage />} path={'/reset-password'} />
     </Routes>
