@@ -8,11 +8,6 @@ html {
   font-family: "Nunito", sans-serif;
 }
 
-input:-webkit-autofill {
-  transition: background-color 50000s ease-in-out 0s;
-  -webkit-text-fill-color: white;
-}
-
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -36,12 +31,12 @@ input:-webkit-autofill {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #74b1e4;
+  background: #5341f3;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0e69a5;
+  background: #4414ca;
 }
 
 /** {

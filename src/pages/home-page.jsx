@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+
 import { useSearchParams } from 'react-router-dom';
 import CreateItemForm from '@/components/create-item-form';
 import { FilterBar } from '@/features/items/components/filter-bar';
@@ -9,6 +10,7 @@ import { useItems } from '@/features/items/hooks/use-items';
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const filters = {
+    //verifica se é mobile ou desktop e se adapta page e limit
     page: Number(searchParams.get('page')) || 1,
     limit: 12,
     categorySlug: searchParams.get('category') || '',
@@ -41,20 +43,18 @@ export function HomePage() {
       newParams.delete('orderBy');
       newParams.delete('orderDirection');
       newParams.set('page', '1'); // Sempre volta para a página 1,
+      newParams.delete('reset');
     }
-
     // Sempre volta para a página 1 ao aplicar um novo filtro
     newParams.set('page', '1');
-
     // Atualiza a URL
     setSearchParams(newParams);
   };
 
   const handlePageChange = (newPage) => {
-    // Garante que não vamos para uma página inválida
-    if (newPage > 0 && newPage <= totalPages) {
-      handleFilterChange('page', newPage);
-    }
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', newPage);
+    setSearchParams(newParams);
   };
 
   return (
@@ -66,7 +66,7 @@ export function HomePage() {
         isFetching={isFetching}
         onFilterChange={handleFilterChange}
       />
-      <FilterBar onFilterChange={handleFilterChange} />
+      <FilterBar filters={filters} onFilterChange={handleFilterChange} />
       <div>
         {/* Mostra um spinner grande apenas no carregamento inicial */}
         {isLoading && (
@@ -112,7 +112,10 @@ export function HomePage() {
                 <button
                   className="text-blue-600 hover:text-blue-800 disabled:text-gray-400"
                   disabled={filters.page >= totalPages}
-                  onClick={() => handlePageChange(filters.page + 1)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageChange(filters.page + 1);
+                  }}
                   type="button"
                 >
                   Próxima

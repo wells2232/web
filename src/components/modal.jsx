@@ -1,3 +1,4 @@
+import { XIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -40,7 +41,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
             onClick={onClose}
             type="button"
           >
-            &times;
+            <XIcon className="h-6 w-6" />
           </button>
         </div>
         {/* Conteúdo do Modal (nosso formulário virá aqui) */}

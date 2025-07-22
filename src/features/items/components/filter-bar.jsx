@@ -1,4 +1,4 @@
-import { FilterXIcon } from 'lucide-react';
+import { FilterXIcon, Loader2 } from 'lucide-react';
 import CreateItem from '@/components/create-Item-button';
 import {
   Select,
@@ -10,9 +10,17 @@ import {
 import { useAuthStore } from '@/stores/use-auth-store';
 import { useItemFormData } from '../hooks/use-item-formdata';
 
-export function FilterBar({ onFilterChange }) {
+export function FilterBar({ filters, onFilterChange }) {
   const { isAuthenticated } = useAuthStore();
   const { categories, conditions, isLoadingFilters } = useItemFormData();
+
+  if (isLoadingFilters) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 rounded-lg py-6 ">
@@ -23,6 +31,7 @@ export function FilterBar({ onFilterChange }) {
             onValueChange={(slug) =>
               onFilterChange('category', slug === 'all' ? '' : slug)
             }
+            value={filters?.categorySlug || 'all'}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Categorias" />
@@ -45,6 +54,7 @@ export function FilterBar({ onFilterChange }) {
             onValueChange={(slug) =>
               onFilterChange('condition', slug === 'all' ? '' : slug)
             }
+            value={filters?.conditionSlug || 'all'}
           >
             <SelectTrigger>
               <SelectValue placeholder="Condição" />
@@ -61,6 +71,7 @@ export function FilterBar({ onFilterChange }) {
           <Select
             disabled={isLoadingFilters}
             onValueChange={(value) => onFilterChange('orderDirection', value)}
+            value={filters?.orderDirection || 'desc'}
           >
             <SelectTrigger>
               <SelectValue placeholder="Ordenar" />
