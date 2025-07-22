@@ -1,32 +1,33 @@
+import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 export default function Modal({ isOpen, onClose, title, children }) {
+  const modalRef = useRef(null);
+  const prevFocusedElement = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      prevFocusedElement.current = document.activeElement; // Salva o elemento focado antes de abrir
+      modalRef.current?.focus(); // Move o foco para o modal
+    }
+    return () => {
+      prevFocusedElement.current?.focus(); // Restaura o foco ao fechar
+    };
+  }, [isOpen]);
+
   if (!isOpen) {
     return null;
   }
 
   return ReactDOM.createPortal(
     // Overlay (fundo escuro)
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-      onClick={onClose}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') {
-          e.stopPropagation();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       {/* Container do Modal (para o conteúdo não fechar ao ser clicado) */}
       <div
         className=" relative max-h-[90vh] w-full max-w-xs overflow-auto rounded-2xl bg-white p-6 text-black shadow-2xl md:max-w-lg"
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          e.stopPropagation();
-        }}
-        role="button"
-        tabIndex={0}
+        ref={modalRef}
+        role="dialog"
+        tabIndex={-1}
       >
         {/* Cabeçalho com Título e Botão de Fechar */}
 

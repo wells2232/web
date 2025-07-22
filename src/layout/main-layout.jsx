@@ -3,11 +3,11 @@ import { NavBar } from './navbar';
 
 export function MainLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-white text-zinc-900 dark:bg-zinc-900">
       <NavBar />
 
-      <main className="w-full flex-grow">
-        <div className="mx-auto w-full max-w-[1204px] px-4 sm:px-6">
+      <main className="w-full flex-grow bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white">
+        <div className="mx-auto w-full px-4 sm:px-6 md:max-w-[1204px]">
           <Outlet />
         </div>
       </main>

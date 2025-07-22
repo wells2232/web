@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CreateItemForm from './create-item-form';
 import Modal from './modal';
+import { Button } from './ui/button';
 
 export default function CreateItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,13 +9,13 @@ export default function CreateItem() {
   return (
     <>
       {/* O botão que abre o modal */}
-      <button
-        className="rounded-xl bg-green-700 p-4 duration-300 ease-out hover:scale-105 hover:bg-green-600"
+      <Button
+        className="bg-indigo-600"
         onClick={() => setIsModalOpen(true)}
         type="button"
       >
         + Criar Novo Item
-      </button>
+      </Button>
 
       {/* O Modal, que contém o formulário */}
       <Modal

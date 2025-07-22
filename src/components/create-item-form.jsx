@@ -128,7 +128,7 @@ export default function CreateItemForm({ onSuccess }) {
                 className="cursor-pointer font-medium text-gray-700 text-sm"
                 htmlFor={`category-${cat.id}`}
               >
-                {cat.category_name}
+                {cat.name}
               </label>
             </div>
           ))}

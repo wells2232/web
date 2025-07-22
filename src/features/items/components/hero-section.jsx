@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/use-auth-store';
 
-export function HeroSection({ searchTerm, setSearchTerm, isFetching }) {
+export function HeroSection({ onFilterChange, isFetching }) {
   const { isAuthenticated } = useAuthStore();
 
   if (!isAuthenticated) {
@@ -20,9 +20,9 @@ export function HeroSection({ searchTerm, setSearchTerm, isFetching }) {
               <input
                 className="w-full rounded-full border-2 border-gray-300 p-4 pl-5 text-lg focus:border-blue-500 focus:ring-blue-500"
                 name="search"
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => onFilterChange('search', e.target.value)}
                 placeholder="Ex: Bicicleta, Cadeira de escritório, Jogo de tabuleiro..."
-                value={searchTerm}
+                type="text"
               />
               {isFetching && (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4">
