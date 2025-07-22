@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { FilterXIcon, Loader2 } from 'lucide-react';
 import CreateItem from '@/components/create-Item-button';
 import {
   Select,
@@ -10,53 +10,89 @@ import {
 import { useAuthStore } from '@/stores/use-auth-store';
 import { useItemFormData } from '../hooks/use-item-formdata';
 
-export function FilterBar({ filters, handleFilterChange }) {
+export function FilterBar({ filters, onFilterChange }) {
   const { isAuthenticated } = useAuthStore();
-  const searchParams = useSearchParams();
-  const category = searchParams.get('category');
+  const { categories, conditions, isLoadingFilters } = useItemFormData();
 
-  const {
-    categories,
-    conditions,
-    isLoading: isLoadingFilters,
-  } = useItemFormData();
+  if (isLoadingFilters) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <Loader2 className="h-6 w-6 animate-spin text-indigo-600" />
+      </div>
+    );
+  }
 
   return (
-    <div className="mt-4 rounded-lg border border-zinc-800 p-6">
-      <div className="flex w-full items-center justify-between gap-4 text-zinc-900 md:w-auto">
-        <div className="flex items-center gap-4">
+    <div className="mt-4 rounded-lg py-6 ">
+      <div className="flex w-full flex-wrap items-center justify-between gap-4 text-zinc-900 md:w-auto">
+        <div className="flex flex-wrap items-center gap-4 md:flex ">
           <Select
-            onValueChange={(value) => handleFilterChange('categoryId', value)}
+            disabled={isLoadingFilters}
+            onValueChange={(slug) =>
+              onFilterChange('category', slug === 'all' ? '' : slug)
+            }
+            value={filters?.categorySlug || 'all'}
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Teste" />
+              <SelectValue placeholder="Categorias" />
             </SelectTrigger>
             <SelectContent className="overflow-hidden rounded-md bg-white text-zinc-900 ">
+              <SelectItem value="all">Todas Categorias</SelectItem>
               {categories.map((cat) => (
                 <SelectItem
                   className="hover:bg-indigo-500"
                   key={cat.id}
-                  value={cat.id}
+                  value={cat.slug}
                 >
-                  {cat.category_name}
+                  {cat.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
           <Select
-            onValueChange={(value) => handleFilterChange('conditionId', value)}
+            disabled={isLoadingFilters}
+            onValueChange={(slug) =>
+              onFilterChange('condition', slug === 'all' ? '' : slug)
+            }
+            value={filters?.conditionSlug || 'all'}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Selecione uma categoria" />
+              <SelectValue placeholder="Condição" />
             </SelectTrigger>
             <SelectContent className={'text-zinc-900'}>
+              <SelectItem value="all">Todas Condições</SelectItem>
               {conditions.map((condition) => (
-                <SelectItem key={condition.id} value={condition.id}>
-                  {condition.condition}
+                <SelectItem key={condition.id} value={condition.slug}>
+                  {condition.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+          <Select
+            disabled={isLoadingFilters}
+            onValueChange={(value) => onFilterChange('orderDirection', value)}
+            value={filters?.orderDirection || 'desc'}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Ordenar" />
+            </SelectTrigger>
+            <SelectContent className={'text-zinc-900'}>
+              <SelectItem value="desc">Mais Recentes</SelectItem>
+              <SelectItem value="asc">Mais Antigos</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className="">
+            <button
+              className="flex items-center gap-2 hover:cursor-pointer hover:text-indigo-600"
+              onClick={
+                () => onFilterChange('reset', true) // Chama a função de reset
+              }
+              type="button"
+            >
+              <FilterXIcon />
+              Limpar Filtros
+            </button>
+          </div>
         </div>
 
         <div>{isAuthenticated && <CreateItem />}</div>

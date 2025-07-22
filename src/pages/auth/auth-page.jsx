@@ -80,7 +80,7 @@ export function AuthPage({ isLogin = false }) {
 
   return (
     <div className="flex h-[100dvh] w-full items-center justify-center">
-      <div className=" flex w-full flex-col items-center justify-center gap-6">
+      <div className=" flex w-full flex-col items-center justify-center gap-6 px-6">
         <AuthForm
           infoText={
             isLogin
@@ -229,7 +229,7 @@ export function AuthPage({ isLogin = false }) {
           </p>
         </div>
       </div>
-      <div className=" h-full w-full items-center justify-center bg-[url(/auth-bg-2.png)] bg-auto md:flex" />
+      <div className=" hidden h-full w-full items-center justify-center bg-[url(/auth-bg-2.png)] bg-auto md:flex" />
     </div>
   );
 }

@@ -1,4 +1,10 @@
-import { MenuIcon, XIcon } from 'lucide-react';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  MenuIcon,
+  UserCircle2Icon,
+  XIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../services/auth-service';
@@ -31,30 +37,52 @@ export function NavBar() {
             {isAuthenticated ? (
               <>
                 <Link
-                  className=" border-transparent border-b-2 text-black hover:border-b-sky-500 hover:text-sky-500"
+                  className=" border-transparent border-b-2 text-black hover:border-b-indigo-600 hover:text-indigo-600"
                   to="/proposals/received"
                 >
                   Minhas Propostas
                 </Link>
-                <span className="text-gray-700">Olá, {user.name}!</span>
-                <button
-                  className="rounded-md bg-red-500 px-4 py-2 text-white hover:cursor-pointer hover:bg-red-600"
-                  onClick={handleLogout}
-                  type="button"
-                >
-                  Sair
-                </button>
+                <div className="group relative inline-block items-center gap-2 py-2">
+                  <button
+                    className="flex items-center gap-2 hover:cursor-pointer"
+                    type="button"
+                  >
+                    <ChevronDownIcon className="ml-1 inline-block group-hover:hidden" />
+                    <ChevronUpIcon className="ml-1 hidden group-hover:inline-block" />
+                    <span className="text-gray-700">Olá, {user.name}!</span>
+                    <UserCircle2Icon className=" text-indigo-500" size={32} />
+                  </button>
+
+                  <div
+                    className="absolute top-full z-10 box-border hidden w-48 rounded-sm border border-zinc-400 py-1 font-medium shadow-lg backdrop-blur-[5px] group-hover:block"
+                    id="user-menu"
+                  >
+                    <Link
+                      className="block border-b not-last:border-b-zinc-400 px-4 py-2 text-gray-200 text-sm hover:text-white "
+                      to={`/users/${user.id}`}
+                    >
+                      Meu Perfil
+                    </Link>
+                    <button
+                      className="block w-full px-4 py-2 text-left text-red-700 hover:cursor-pointer hover:text-red-500"
+                      onClick={handleLogout}
+                      type="button"
+                    >
+                      Sair
+                    </button>
+                  </div>
+                </div>
               </>
             ) : (
               <>
                 <Link
-                  className="text-black text-sm hover:text-sky-500"
+                  className="font-semibold text-sm text-zinc-600 hover:text-indigo-800"
                   to="/login"
                 >
                   Entrar
                 </Link>
                 <Link
-                  className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+                  className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
                   to="/register"
                 >
                   Cadastrar-se
@@ -79,9 +107,19 @@ export function NavBar() {
           <nav className="flex flex-col space-y-2 p-4">
             {isAuthenticated ? (
               <>
-                <span className="px-2 py-1 font-bold text-gray-800">
-                  Olá, {user?.name}!
-                </span>
+                <Link
+                  className="flex items-center gap-2 border-b px-2 pb-2 hover:cursor-pointer"
+                  to={`/users/${user.id}`}
+                >
+                  <span className="text-gray-700">Olá, {user.name}!</span>
+                  <UserCircle2Icon className="text-gray-600" size={32} />
+                </Link>
+                <Link
+                  className="border-transparent border-b-2 px-2 pt-2 text-black hover:border-b-indigo-600 hover:text-indigo-600"
+                  to="/proposals/received"
+                >
+                  Minhas Propostas
+                </Link>
                 <button
                   className="rounded px-2 py-1 text-left text-red-600 hover:bg-gray-100"
                   onClick={handleLogout}
