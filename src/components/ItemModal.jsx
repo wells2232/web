@@ -43,7 +43,7 @@ export default function ItemModal({ isOpen, onClose, title, children }) {
             &times;
           </button>
         </div>
-        <h1>TESTANDO</h1>
+        
         <div>{children}</div>
       </div>
     </div>,
