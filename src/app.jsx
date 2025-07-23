@@ -6,6 +6,7 @@ import { RequestResetPasswordPage } from './pages/auth/request-reset-password';
 import { ResetPasswordPage } from './pages/auth/reset-password-page';
 import { HomePage } from './pages/home-page';
 import { ItemGrid } from './pages/items/ItemsGrid'; 
+import { PaginaPropostas } from './pages/proposal/myproposals';
 
 export function App() {
   const { isLoading } = useInitializeAuth();
@@ -145,6 +146,7 @@ export function App() {
       <Route element={<RequestResetPasswordPage />} path={'/password/reset'} />
       <Route element={<ItemGrid items={items} />} path="/items"  />
       <Route element={<ResetPasswordPage />} path={'/reset-password'} />
+      <Route element={<PaginaPropostas />} path={'/myproposals'} />
     </Routes>
   );
 }
