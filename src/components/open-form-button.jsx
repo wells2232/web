@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import CreateItemForm from './create-item-form';
+import CreateProposalForm from './create-proposal-form';
 import Modal from './modal';
 import { Button } from './ui/button';
 
-export default function CreateItem() {
+export default function OpenFormButton({ form }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -14,16 +15,20 @@ export default function CreateItem() {
         onClick={() => setIsModalOpen(true)}
         type="button"
       >
-        + Criar Novo Item
+        {form === 'Item' ? 'Publicar Item' : 'Criar Proposta'}
       </Button>
 
       {/* O Modal, que contém o formulário */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={'Cadastrar Item'}
+        title={`Publicar ${form}`}
       >
-        <CreateItemForm onSuccess={() => setIsModalOpen(false)} />
+        {form === 'Item' ? (
+          <CreateItemForm onSuccess={() => setIsModalOpen(false)} />
+        ) : (
+          <CreateProposalForm onSuccess={() => setIsModalOpen(false)} />
+        )}
       </Modal>
     </>
   );

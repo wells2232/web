@@ -45,9 +45,5 @@ export function useCreateItem({ onSuccess: onFormSuccess }) {
         onFormSuccess();
       }
     },
-    onError: (error) =>
-      // Tratar erro aqui, talvez com uma notificação
-      // biome-ignore lint/suspicious/noConsole: <>
-      console.error('Erro ao criar item:', error),
   });
 }
