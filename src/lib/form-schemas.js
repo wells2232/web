@@ -27,3 +27,9 @@ export const itemFormSchema = z.object({
       )
   ),
 });
+
+export const proposalFormSchema = z.object({
+  message: z.string().min(1, 'A mensagem é obrigatória.'),
+  itemId: z.uuid('ID do item inválido.'),
+  offeredItemsIds: z.array(z.uuid()).min(1, 'Selecione pelo menos um Item.'),
+});

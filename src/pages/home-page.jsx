@@ -2,9 +2,11 @@ import { Loader2 } from 'lucide-react';
 
 import { useSearchParams } from 'react-router-dom';
 import CreateItemForm from '@/components/create-item-form';
+import OpenFormButton from '@/components/open-form-button';
 import { FilterBar } from '@/features/items/components/filter-bar';
 import { HeroSection } from '@/features/items/components/hero-section';
-import ItemGrid from '@/features/items/components/item-grid';
+import { ItemGrid } from '@/features/items/components/ItemsGrid';
+//import ItemGrid from '@/features/items/components/item-grid';
 import { useItems } from '@/features/items/hooks/use-items';
 
 export function HomePage() {
@@ -67,6 +69,7 @@ export function HomePage() {
         onFilterChange={handleFilterChange}
       />
       <FilterBar filters={filters} onFilterChange={handleFilterChange} />
+      <OpenFormButton form={'Proposta'} />
       <div>
         {/* Mostra um spinner grande apenas no carregamento inicial */}
         {isLoading && (
@@ -85,7 +88,12 @@ export function HomePage() {
         {!(isLoading || isError) && (
           <>
             {items.length > 0 ? (
-              <ItemGrid items={items} />
+              <ItemGrid
+                filters={filters}
+                items={items}
+                onPageChange={handlePageChange}
+                totalPages={totalPages}
+              />
             ) : (
               <div className="py-16 text-center">
                 <p className="text-gray-500 text-xl">Nenhum item encontrado.</p>
@@ -96,32 +104,6 @@ export function HomePage() {
             )}
 
             {/* Controles de Paginação */}
-            {items.length > 0 && (
-              <div className="mt-12 mb-4 flex items-center justify-center gap-4">
-                <button
-                  className="text-blue-600 hover:text-blue-800 disabled:text-gray-400"
-                  disabled={filters.page <= 1}
-                  onClick={() => handlePageChange(filters.page - 1)}
-                  type="button"
-                >
-                  Anterior
-                </button>
-                <span className="font-semibold text-gray-700 ">
-                  Página {filters.page} de {totalPages}
-                </span>
-                <button
-                  className="text-blue-600 hover:text-blue-800 disabled:text-gray-400"
-                  disabled={filters.page >= totalPages}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handlePageChange(filters.page + 1);
-                  }}
-                  type="button"
-                >
-                  Próxima
-                </button>
-              </div>
-            )}
           </>
         )}
       </div>

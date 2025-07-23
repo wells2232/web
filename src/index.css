@@ -4,6 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant light (&:is(:not(.dark *) ));
+
+@theme {
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-float-reverse: float-reverse 3s ease-in-out infinite;
+}
+
 html {
   font-family: "Nunito", sans-serif;
 }

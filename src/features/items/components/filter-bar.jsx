@@ -1,5 +1,5 @@
 import { FilterXIcon, Loader2 } from 'lucide-react';
-import CreateItem from '@/components/create-Item-button';
+import OpenFormButton from '@/components/open-form-button';
 import {
   Select,
   SelectContent,
@@ -21,6 +21,8 @@ export function FilterBar({ filters, onFilterChange }) {
       </div>
     );
   }
+
+  console.log('FilterBar filters:', filters);
 
   return (
     <div className="mt-4 rounded-lg py-6 ">
@@ -95,7 +97,7 @@ export function FilterBar({ filters, onFilterChange }) {
           </div>
         </div>
 
-        <div>{isAuthenticated && <CreateItem />}</div>
+        <div>{isAuthenticated && <OpenFormButton form={'Item'} />}</div>
       </div>
     </div>
   );

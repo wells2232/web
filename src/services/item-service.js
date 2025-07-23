@@ -16,10 +16,19 @@ export const fetchItems = async (params) => {
       cleanParams[key] = params[key];
     }
   }
+  console.log('Fetching items with params:', cleanParams);
 
   const queryParams = new URLSearchParams(cleanParams).toString();
   const finalUrl = `${API_URL}/items?${queryParams}`;
 
   const { data } = await axios.get(finalUrl);
   return data; // Retorna o objeto completo { items: [...], totalPages, ... }
+};
+
+export const fetchUserItems = async (userId) => {
+  const response = await axios.get(`${API_URL}/items/user/${userId}`, {
+    withCredentials: true,
+  });
+  console.log('Fetched user items:', response.data);
+  return response.data; // Retorna o objeto completo { items: [...]
 };
