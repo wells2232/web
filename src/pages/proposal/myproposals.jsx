@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BadgeCheck, Clock, XCircle, ArrowRight, Inbox, Send } from "lucide-react";
+import { ExchangeProposalCard } from "@/components/Proposalcard";
 
 const propostas = [
   {
@@ -105,6 +106,10 @@ export function PaginaPropostas() {
 
       <h2 className="text-xl font-bold mb-1">Propostas Realizadas</h2>
       <p className="text-gray-600 mb-4">Acompanhe o status das propostas que você enviou</p>
+      <ExchangeProposalCard />
+      <ExchangeProposalCard />
+      <ExchangeProposalCard />
+      
 
      
     </div>
