@@ -25,7 +25,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       {/* Container do Modal (para o conteúdo não fechar ao ser clicado) */}
       <div
-        className=" relative max-h-[90vh] w-full max-w-xs overflow-auto rounded-2xl bg-white p-6 text-black shadow-2xl md:max-w-lg"
+        className=" relative max-h-screen w-full max-w-xs overflow-auto rounded-2xl bg-white p-6 text-black shadow-2xl md:max-w-4xl"
         ref={modalRef}
         role="dialog"
         tabIndex={-1}
@@ -44,7 +44,6 @@ export default function Modal({ isOpen, onClose, title, children }) {
             <XIcon className="h-6 w-6" />
           </button>
         </div>
-        {/* Conteúdo do Modal (nosso formulário virá aqui) */}
         <div>{children}</div>
       </div>
     </div>,

@@ -1,6 +1,7 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Toaster } from '@/components/ui/sonner';
 import { useInitializeAuth } from '../hooks/use-initialize-auth';
 
 export const Route = createRootRoute({
@@ -22,6 +23,7 @@ export function RootComponent() {
     <div className="min-h-screen">
       <Outlet />
       <TanStackRouterDevtools position="bottom-right" />
+      <Toaster />
     </div>
   );
 }

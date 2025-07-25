@@ -1,12 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  ArrowRight,
-  BadgeCheck,
-  Clock,
-  Inbox,
-  Send,
-  XCircle,
-} from 'lucide-react';
+import { ArrowRight, Inbox, Send } from 'lucide-react';
 import { useState } from 'react';
 import { ProposalList } from '@/components/ProposalList';
 import { ProposalModal } from '@/components/ProposalModal';
@@ -15,18 +8,6 @@ import {
   useProposals,
   useReceivedProposals,
 } from '@/features/proposal/hooks/use-proposals';
-
-const statusStyles = {
-  Pendente: 'bg-yellow-100 text-yellow-800',
-  Aceita: 'bg-green-100 text-green-800',
-  Recusada: 'bg-red-100 text-red-800',
-};
-
-const statusIcons = {
-  Pendente: <Clock className="h-4 w-4" />,
-  Aceita: <BadgeCheck className="h-4 w-4" />,
-  Recusada: <XCircle className="h-4 w-4" />,
-};
 
 export const Route = createFileRoute('/_app/proposals')({
   component: ProposalPage,
@@ -46,8 +27,6 @@ export function ProposalPage() {
     abaSelecionada === 'recebidas'
       ? receivedProposals || []
       : sentProposals || [];
-
-  console.log(receivedProposals);
 
   const handleCardClick = (proposal) => {
     setModalProposal(proposal);
@@ -117,7 +96,10 @@ export function ProposalPage() {
       <ProposalModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        proposal={modalProposal} // ← esta linha estava faltando!
+        onSuccess={() => {
+          setIsModalOpen(false);
+        }}
+        proposal={modalProposal}
       />
     </div>
   );

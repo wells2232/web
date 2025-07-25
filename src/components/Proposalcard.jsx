@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/style/useFilenamingConvention: <explanation> */
 import { BadgeCheck, Calendar, Clock, XCircle } from 'lucide-react';
-import { useState } from 'react';
 
 const statusStyles = {
   Pendente: 'text-yellow-700 bg-yellow-100',
@@ -14,9 +13,13 @@ const statusIcons = {
   Recusada: <XCircle className="text-red-600" />,
 };
 
-export function ExchangeProposalCard({ proposal, onClick }) {
+export function ProposalCard({ proposal, onClick }) {
   // const [isOpen, setIsOpen] = useState(false);
-  if (!proposal) return null;
+  if (!proposal) {
+    return null;
+  }
+
+  console.log('ProposalCard:', proposal);
 
   return (
     <div
@@ -33,7 +36,7 @@ export function ExchangeProposalCard({ proposal, onClick }) {
         </span>
         <div className="flex items-center gap-2 text-gray-500 text-sm">
           <Calendar />
-          <span>{proposal.data}</span>
+          <span>{proposal.createdAt}</span>
         </div>
       </div>
 
@@ -57,19 +60,15 @@ export function ExchangeProposalCard({ proposal, onClick }) {
             <div className="flex items-center gap-3" key={item.id}>
               <picture>
                 <img
-                  alt={proposal.offeredItems[0].itemName}
+                  alt={item.itemName}
                   className="h-16 w-16 rounded border object-cover"
-                  src={proposal.offeredItems[0].imageUrl}
+                  src={item.imageUrl}
                 />
               </picture>
 
               <div>
-                <p className="text-wrap font-semibold">
-                  {proposal.offeredItems[0].itemName}
-                </p>
-                <p className="text-gray-500 text-sm">
-                  {proposal.offeredItems.condition}
-                </p>
+                <p className="text-wrap font-semibold">{item.itemName}</p>
+                <p className="text-gray-500 text-sm">{item.condition.name}</p>
               </div>
             </div>
           ))}
@@ -81,14 +80,14 @@ export function ExchangeProposalCard({ proposal, onClick }) {
           <div className="flex items-center gap-3">
             <picture>
               <img
-                alt={proposal.targetItem.name}
+                alt={proposal.targetItem.itemName}
                 className="h-16 w-16 rounded border object-cover"
                 src={proposal.targetItem.imageUrl}
               />
             </picture>
 
             <div>
-              <p className="font-semibold">{proposal.targetItem.name}</p>
+              <p className="font-semibold">{proposal.targetItem.itemName}</p>
               <p className="text-gray-500 text-sm">
                 {proposal.targetItem.condition}
               </p>
@@ -98,9 +97,7 @@ export function ExchangeProposalCard({ proposal, onClick }) {
       </div>
 
       <div className="mb-4 max-h-15 overflow-hidden text-ellipsis rounded-lg bg-gray-100 p-4">
-        <p className="line-clamp-3 text-gray-700 text-sm">
-          {proposal.mensagem}
-        </p>
+        <p className="line-clamp-3 text-gray-700 text-sm">{proposal.message}</p>
       </div>
     </div>
   );
