@@ -9,16 +9,25 @@ export const createProposal = async (data) => {
   return response.data;
 };
 
-export const fetchUserProposals = async (userId) => {
+export const fetchUserProposals = async () => {
   const response = await axios.get(`${API_BASE_URL}/proposals/made`, {
     withCredentials: true,
   });
   return response.data;
 };
 
-export const fetchReceivedProposals = async (userId) => {
+export const fetchReceivedProposals = async () => {
   const response = await axios.get(`${API_BASE_URL}/proposals/received`, {
     withCredentials: true,
   });
+  return response.data;
+};
+
+export const acceptProposal = async (proposalId) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/proposals/accept/${proposalId}`,
+    {},
+    { withCredentials: true }
+  );
   return response.data;
 };
