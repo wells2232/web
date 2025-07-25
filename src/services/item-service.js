@@ -29,6 +29,10 @@ export const fetchUserItems = async (userId) => {
   const response = await axios.get(`${API_URL}/items/user/${userId}`, {
     withCredentials: true,
   });
-  console.log('Fetched user items:', response.data);
   return response.data; // Retorna o objeto completo { items: [...]
+};
+
+export const fetchItemById = async (id) => {
+  const response = await axios.get(`${API_URL}/items/${id}`);
+  return response.data; // Retorna o objeto completo { item: {...} }
 };

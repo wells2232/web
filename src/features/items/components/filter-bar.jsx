@@ -25,7 +25,7 @@ export function FilterBar({ filters, onFilterChange }) {
   console.log('FilterBar filters:', filters);
 
   return (
-    <div className="mt-4 rounded-lg py-6 ">
+    <div className=" py-10 border-b-2 border-gray-200 ">
       <div className="flex w-full flex-wrap items-center justify-between gap-4 text-zinc-900 md:w-auto">
         <div className="flex flex-wrap items-center gap-4 md:flex ">
           <Select

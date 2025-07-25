@@ -1,11 +1,8 @@
-import { Route, Routes } from 'react-router-dom';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { useInitializeAuth } from './hooks/use-initialize-auth';
-import { MainLayout } from './layout/main-layout';
-import { AuthPage } from './pages/auth/auth-page';
-import { RequestResetPasswordPage } from './pages/auth/request-reset-password';
-import { ResetPasswordPage } from './pages/auth/reset-password-page';
-import { HomePage } from './pages/home-page';
-import { ItemPage } from './pages/items/itemPage';
+import { routeTree } from './routeTree.gen';
+
+const router = createRouter({ routeTree });
 
 export function App() {
   const { isLoading } = useInitializeAuth();
@@ -19,16 +16,5 @@ export function App() {
     );
   }
 
-  return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route element={<HomePage />} path="/" />
-        <Route element={<ItemPage />} path="/items/:id" />
-      </Route>
-      <Route element={<AuthPage isLogin={true} />} path={'/login'} />
-      <Route element={<AuthPage />} path={'/register'} />
-      <Route element={<RequestResetPasswordPage />} path={'/password/reset'} />
-      <Route element={<ResetPasswordPage />} path={'/reset-password'} />
-    </Routes>
-  );
+  return <RouterProvider router={router} />;
 }

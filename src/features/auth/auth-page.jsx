@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { useCitiesByState, useStates } from '@/hooks/use-location';
 import { AuthForm } from '../../components/auth-form';
@@ -31,6 +31,7 @@ const loginSchema = registerSchema.pick({
 });
 
 export function AuthPage({ isLogin = false }) {
+  const search = useSearch({ strict: false });
   const navigate = useNavigate();
   const { login } = useAuthStore();
 
@@ -61,12 +62,12 @@ export function AuthPage({ isLogin = false }) {
         await loginUser(validatedData);
         const currentUser = await fetchCurrentUser();
         login(currentUser);
-        navigate('/');
+        navigate({ to: search.redirect || '/' });
       } else {
         await registerUser(validatedData);
         const currentUser = await fetchCurrentUser();
         login(currentUser);
-        navigate('/');
+        navigate({ to: search.redirect || '/' });
       }
     } catch (error) {
       if (error.response?.data?.message) {

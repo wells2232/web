@@ -68,7 +68,7 @@ const ItemCard = ({ item, isSelected, toggleItem }) => {
   );
 };
 
-export default function CreateProposalForm({ onSuccess }) {
+export default function CreateProposalForm({ onSuccess, itemId }) {
   const { user } = useAuthStore();
   const { userItems, isLoading } = useUserItems(user?.id);
   const createProposalMutation = useCreateProposal({ onSuccess });
@@ -77,7 +77,7 @@ export default function CreateProposalForm({ onSuccess }) {
     mode: 'onSubmit',
     defaultValues: {
       message: '',
-      itemId: 'af0396ef-d09b-414c-8bf7-6c298c8bc7d2',
+      itemId,
       offeredItemsIds: [],
     },
   });
@@ -88,10 +88,10 @@ export default function CreateProposalForm({ onSuccess }) {
     setValue,
     formState: { errors },
   } = form;
+
   const offeredItemsIds = watch('offeredItemsIds') ?? [];
 
   const onSubmit = (formData) => {
-    setValue('itemId', 'af0396ef-d09b-414c-8bf7-6c298c8bc7d2');
     console.log('Submitting proposal with data:', formData);
     createProposalMutation.mutate(formData);
   };

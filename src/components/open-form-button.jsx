@@ -4,14 +4,15 @@ import CreateProposalForm from './create-proposal-form';
 import Modal from './modal';
 import { Button } from './ui/button';
 
-export default function OpenFormButton({ form }) {
+export default function OpenFormButton({ form, itemId, className }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       {/* O botão que abre o modal */}
       <Button
-        className="bg-indigo-600"
+        className={`bg-indigo-600 hover:bg-indigo-700 ${className}`}
+        disabled={isModalOpen}
         onClick={() => setIsModalOpen(true)}
         type="button"
       >
@@ -22,12 +23,15 @@ export default function OpenFormButton({ form }) {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={`Publicar ${form}`}
+        title={form === 'Item' ? 'Publicar Item' : 'Criar Proposta'}
       >
         {form === 'Item' ? (
           <CreateItemForm onSuccess={() => setIsModalOpen(false)} />
         ) : (
-          <CreateProposalForm onSuccess={() => setIsModalOpen(false)} />
+          <CreateProposalForm
+            itemId={itemId}
+            onSuccess={() => setIsModalOpen(false)}
+          />
         )}
       </Modal>
     </>
