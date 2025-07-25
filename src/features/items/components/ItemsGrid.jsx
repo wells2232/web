@@ -2,8 +2,8 @@ import ItemCard from '../../../components/ItemCard'; // ou ajuste o caminho conf
 
 export function ItemGrid({ items, totalPages, onPageChange, filters }) {
   return (
-    <div className="flex w-full flex-col p-8 text-zinc-900">
-      <div className=" items-center p-10 align-middle">
+    <div className="flex w-full flex-col text-zinc-900">
+      <div className=" items-center align-middle">
         <h1 className="flex justify-center font-bold font-sans text-6xl">
           Lista de Itens
         </h1>
@@ -13,7 +13,7 @@ export function ItemGrid({ items, totalPages, onPageChange, filters }) {
         </h2>
       </div>
 
-      <div className="mx-auto mt-6 grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 ">
+      <div className="mx-auto mt-6 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 ">
         {items.map((item) => (
           <ItemCard item={item} key={item.id} />
         ))}

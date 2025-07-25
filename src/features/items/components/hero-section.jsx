@@ -6,7 +6,7 @@ export function HeroSection({ onFilterChange, isFetching }) {
   if (!isAuthenticated) {
     return (
       <section className="rounded-lg bg-white px-4 py-16 text-center shadow-md">
-        <div className="container mx-auto">
+        <div className=" mx-auto">
           <h1 className="font-extrabold text-4xl text-gray-800 tracking-tight md:text-5xl">
             Sua Próxima Descoberta está a uma Troca de Distância.
           </h1>

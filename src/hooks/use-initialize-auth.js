@@ -1,5 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { fetchCurrentUser } from '../../src/services/auth-service';
 import { useAuthStore } from './../stores/use-auth-store';
 
