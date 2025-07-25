@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/style/useFilenamingConvention: <explanation> */
-import { BadgeCheck, Calendar, Clock, XCircle } from 'lucide-react';
+import { BadgeCheck, Calendar, Clock, Target, XCircle } from 'lucide-react';
 
 const statusStyles = {
   Pendente: 'text-yellow-700 bg-yellow-100',
@@ -39,7 +39,6 @@ export function ProposalCard({ proposal, onClick }) {
           <span>{proposal.createdAt}</span>
         </div>
       </div>
-
       {/* Nome e tipo da proposta */}
       <div className="mb-4 flex items-center gap-3">
         <img
@@ -60,15 +59,19 @@ export function ProposalCard({ proposal, onClick }) {
             <div className="flex items-center gap-3" key={item.id}>
               <picture>
                 <img
-                  alt={item.itemName}
+                  alt={proposal.targetItem.itemName}
                   className="h-16 w-16 rounded border object-cover"
-                  src={item.imageUrl}
+                  src={proposal.targetItem.imageUrl}
                 />
               </picture>
 
               <div>
-                <p className="text-wrap font-semibold">{item.itemName}</p>
-                <p className="text-gray-500 text-sm">{item.condition.name}</p>
+                <p className="text-wrap font-semibold">
+                  {proposal.proposerName}
+                </p>
+                <p className="text-gray-500 text-sm">
+                  {proposal.targetItem.condition}
+                </p>
               </div>
             </div>
           ))}
@@ -95,7 +98,6 @@ export function ProposalCard({ proposal, onClick }) {
           </div>
         </div>
       </div>
-
       <div className="mb-4 max-h-15 overflow-hidden text-ellipsis rounded-lg bg-gray-100 p-4">
         <p className="line-clamp-3 text-gray-700 text-sm">{proposal.message}</p>
       </div>

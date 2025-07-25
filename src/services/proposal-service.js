@@ -13,6 +13,7 @@ export const fetchUserProposals = async () => {
   const response = await axios.get(`${API_BASE_URL}/proposals/made`, {
     withCredentials: true,
   });
+  console.log('Fetched proposals:', response.data);
   return response.data;
 };
 

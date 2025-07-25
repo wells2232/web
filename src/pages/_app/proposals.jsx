@@ -65,7 +65,7 @@ export function ProposalPage() {
           >
             <Inbox className="h-4 w-4" /> Propostas Recebidas
             <span className="rounded-full bg-blue-100 px-2 py-0.5 font-bold text-blue-600 text-xs">
-              3
+              {receivedProposals?.totalItems}
             </span>
           </Button>
 
