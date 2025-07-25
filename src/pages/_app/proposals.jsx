@@ -33,6 +33,8 @@ export function ProposalPage() {
     setIsModalOpen(true);
   };
 
+  console.log('Proposals:', proposals);
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl p-8 ">
@@ -65,7 +67,7 @@ export function ProposalPage() {
           >
             <Inbox className="h-4 w-4" /> Propostas Recebidas
             <span className="rounded-full bg-blue-100 px-2 py-0.5 font-bold text-blue-600 text-xs">
-              3
+              {receivedProposals?.totalItems}
             </span>
           </Button>
 
@@ -80,7 +82,7 @@ export function ProposalPage() {
           >
             <Send className="h-4 w-4" /> Propostas Realizadas
             <span className="rounded-full bg-blue-100 px-2 py-0.5 font-bold text-blue-600 text-xs">
-              3
+              {sentProposals?.totalItems}
             </span>
           </Button>
         </div>

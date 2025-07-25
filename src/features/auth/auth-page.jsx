@@ -135,7 +135,7 @@ export function AuthPage({ isLogin = false }) {
                 {isLogin && (
                   <Link
                     className="text-sm text-zinc-300"
-                    to={'/password/reset'}
+                    to={'/reset-password'}
                   >
                     Esqueceu a senha?
                   </Link>
@@ -222,7 +222,9 @@ export function AuthPage({ isLogin = false }) {
             {isLogin ? 'Não tem uma conta? ' : 'Já tem uma conta? '}
             <button
               className=" text-white hover:cursor-pointer hover:font-semibold"
-              onClick={() => navigate(isLogin ? '/register' : '/login')}
+              onClick={() =>
+                navigate(isLogin ? { to: '/register' } : { to: '/login' })
+              }
               type="button"
             >
               {isLogin ? 'Registre-se' : 'Faça login'}
