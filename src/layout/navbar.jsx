@@ -19,7 +19,7 @@ export function NavBar() {
     try {
       await logoutUser();
       logout();
-      navigate('/');
+      navigate({ to: '/' });
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
     }
