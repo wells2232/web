@@ -7,19 +7,25 @@ import {
 export function useProposals(userId) {
   const queryClient = useQueryClient();
 
-  return useQuery(['proposals'], fetchUserProposals, {
+  return useQuery({
+    queryKey: ['proposals', userId],
+    queryFn: () => fetchUserProposals(userId),
     onSuccess: (data) => {
-      queryClient.setQueryData(['proposals'], data);
+      queryClient.setQueryData(['proposals', userId], data);
     },
+    keepPreviousData: true,
   });
 }
 
 export function useReceivedProposals() {
   const queryClient = useQueryClient();
 
-  return useQuery(['receivedProposals'], fetchReceivedProposals, {
+  return useQuery({
+    queryKey: ['receivedProposals'],
+    queryFn: fetchReceivedProposals,
     onSuccess: (data) => {
       queryClient.setQueryData(['receivedProposals'], data);
     },
+    keepPreviousData: true,
   });
 }

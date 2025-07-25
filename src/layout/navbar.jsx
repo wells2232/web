@@ -37,7 +37,7 @@ export function NavBar() {
               <>
                 <Link
                   className=" border-transparent border-b-2 text-black hover:border-b-indigo-600 hover:text-indigo-600"
-                  to="/proposals/received"
+                  to="/proposals"
                 >
                   Minhas Propostas
                 </Link>
@@ -82,7 +82,7 @@ export function NavBar() {
                 </Link>
                 <Link
                   className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
-                  to="/auth/register"
+                  to="/register"
                 >
                   Cadastrar-se
                 </Link>
@@ -115,7 +115,7 @@ export function NavBar() {
                 </Link>
                 <Link
                   className="border-transparent border-b-2 px-2 pt-2 text-black hover:border-b-indigo-600 hover:text-indigo-600"
-                  to="/proposals/received"
+                  to="/proposals"
                 >
                   Minhas Propostas
                 </Link>
