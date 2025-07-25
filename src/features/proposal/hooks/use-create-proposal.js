@@ -6,7 +6,6 @@ export function useCreateProposal({ onSuccess }) {
 
   return useMutation({
     mutationFn: (proposalData) => {
-      console.log('Creating proposal with data:', proposalData);
       return createProposal(proposalData);
     },
     onSuccess: (data) => {

@@ -1,5 +1,5 @@
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import z from 'zod';
 import { AuthForm } from '../../components/auth-form';
 import { resetPassword } from '../../services/auth-service';
@@ -25,8 +25,8 @@ export function ResetPasswordPage() {
   });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+  const search = useSearch({ strict: false }); // permite usar chaves opcionais
+  const token = search.token;
   //window.history.replaceState({}, '', '/reset-password');
 
   const handleInputChange = (e) => {

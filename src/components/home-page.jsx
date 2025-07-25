@@ -1,8 +1,6 @@
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { Loader2 } from 'lucide-react';
-
-import { useSearchParams } from 'react-router-dom';
 import CreateItemForm from '@/components/create-item-form';
-import OpenFormButton from '@/components/open-form-button';
 import { FilterBar } from '@/features/items/components/filter-bar';
 import { HeroSection } from '@/features/items/components/hero-section';
 import { ItemGrid } from '@/features/items/components/ItemsGrid';
@@ -10,16 +8,20 @@ import { ItemGrid } from '@/features/items/components/ItemsGrid';
 import { useItems } from '@/features/items/hooks/use-items';
 
 export function HomePage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const search = useSearch({
+    strict: false, // permite usar chaves opcionais
+  });
+  const navigate = useNavigate();
+
   const filters = {
     //verifica se é mobile ou desktop e se adapta page e limit
-    page: Number(searchParams.get('page')) || 1,
+    page: Number(search.page) || 1,
     limit: 12,
-    categorySlug: searchParams.get('category') || '',
-    conditionSlug: searchParams.get('condition') || '',
-    search: searchParams.get('search') || '',
-    orderBy: searchParams.get('orderBy') || 'created_at',
-    orderDirection: searchParams.get('orderDirection') || 'desc',
+    categorySlug: search.category || '',
+    conditionSlug: search.condition || '',
+    search: search.search || '',
+    orderBy: search.orderBy || 'created_at',
+    orderDirection: search.orderDirection || 'desc',
   };
 
   const { data, isLoading, isError, error, isFetching } = useItems(filters);
@@ -28,39 +30,37 @@ export function HomePage() {
   const totalPages = data?.totalPages || 0;
 
   const handleFilterChange = (filterKey, value) => {
-    // Criamos uma cópia dos parâmetros atuais da URL
-    const newParams = new URLSearchParams(searchParams);
-    if (value) {
-      newParams.set(filterKey, value);
-    } else {
-      // Se o valor for vazio, removemos o parâmetro da URL
-      newParams.delete(filterKey);
-    }
+    let newSearch = { ...search };
+
+    console.log('newSearch', newSearch, typeof newSearch);
 
     if (filterKey === 'reset') {
       // Se for um reset, limpamos todos os filtros
-      newParams.delete('category');
-      newParams.delete('condition');
-      newParams.delete('search');
-      newParams.delete('orderBy');
-      newParams.delete('orderDirection');
-      newParams.set('page', '1'); // Sempre volta para a página 1,
-      newParams.delete('reset');
+      newSearch = {};
+    } else if (value) {
+      newSearch[filterKey] = value;
+    } else {
+      delete newSearch[filterKey];
     }
-    // Sempre volta para a página 1 ao aplicar um novo filtro
-    newParams.set('page', '1');
-    // Atualiza a URL
-    setSearchParams(newParams);
+
+    newSearch.page = 1;
+
+    navigate({
+      to: '/',
+      search: newSearch,
+    });
   };
 
   const handlePageChange = (newPage) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('page', newPage);
-    setSearchParams(newParams);
+    const newSearch = { ...search, page: newPage };
+    navigate({
+      to: '/',
+      search: newSearch,
+    });
   };
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto space-y-8 md:max-w-[1204px]">
       <div className="mx-auto flex w-fit" hidden>
         <CreateItemForm />
       </div>
@@ -69,8 +69,7 @@ export function HomePage() {
         onFilterChange={handleFilterChange}
       />
       <FilterBar filters={filters} onFilterChange={handleFilterChange} />
-      <OpenFormButton form={'Proposta'} />
-      <div>
+      <div className="mb-10 flex flex-col items-center justify-center">
         {/* Mostra um spinner grande apenas no carregamento inicial */}
         {isLoading && (
           <div className="flex justify-center p-12">

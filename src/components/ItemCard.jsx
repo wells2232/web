@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
+import ItemConditionBadge from './item-condition-badge';
 import { Badge } from './ui/badge';
 
 export default function ItemCard({ item, onClick }) {
@@ -7,23 +8,10 @@ export default function ItemCard({ item, onClick }) {
 
   const primaryCategory = categories[0] || { name: 'Sem Categoria' };
 
-  /*const iconColorClass =
-    condition.name === 'Novo'
-      ? 'text-green-600'
-      : condition.name === 'Usado - Como Novo'
-        ? 'text-yellow-500'
-        : 'text-gray-600';*/
-
-  let badgeClass = 'bg-gray-700 text-gray-700';
-  if (condition.name === 'Novo') {
-    badgeClass = 'bg-green-300 text-green-700';
-  } else if (condition.name === 'Usado - Como Novo') {
-    badgeClass = 'bg-yellow-300 text-yellow-500';
-  }
-
   return (
     <Link
       className="hover:-translate-y-1 relative flex h-full flex-col justify-between rounded-2xl border border-gray-200 bg-white shadow-lg transition delay-150 duration-300 ease-in-out hover:scale-105"
+      params={{ id: item.id }}
       to={`/items/${item.id}`}
     >
       {/* Imagem */}
@@ -48,9 +36,7 @@ export default function ItemCard({ item, onClick }) {
         <div className="flex items-center justify-between">
           <div className="flex flex-col items-start gap-2">
             <Badge>{primaryCategory.name}</Badge>
-            <Badge className={`${badgeClass} text-white text-xs`}>
-              {condition.name}
-            </Badge>
+            <ItemConditionBadge condition={condition.name} />
           </div>
 
           <button

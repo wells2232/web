@@ -2,10 +2,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
-@custom-variant light (&:is(:not(.dark *) ));
-
 @theme {
   --animate-float: float 3s ease-in-out infinite;
   --animate-float-reverse: float-reverse 3s ease-in-out infinite;
@@ -50,6 +46,7 @@ html {
   outline: 1px solid red;
 }*/
 
+/* biome-ignore lint/nursery/noUnknownAtRule: <inline> */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -155,13 +152,4 @@ html {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

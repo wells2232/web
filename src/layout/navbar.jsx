@@ -1,3 +1,4 @@
+import { Link, useNavigate } from '@tanstack/react-router';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -6,7 +7,6 @@ import {
   XIcon,
 } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../services/auth-service';
 import { useAuthStore } from '../stores/use-auth-store';
 
@@ -21,8 +21,7 @@ export function NavBar() {
       logout();
       navigate('/');
     } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: <>
-      console.error('Erro ao deslogar usuário:', error);
+      console.error('Erro ao fazer logout:', error);
     }
   };
 
@@ -83,7 +82,7 @@ export function NavBar() {
                 </Link>
                 <Link
                   className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
-                  to="/register"
+                  to="/auth/register"
                 >
                   Cadastrar-se
                 </Link>
