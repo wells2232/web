@@ -77,7 +77,7 @@ export default function CreateProposalForm({ onSuccess }) {
     mode: 'onSubmit',
     defaultValues: {
       message: '',
-      itemId: 'af0396ef-d09b-414c-8bf7-6c298c8bc7d2',
+      itemId: 'ebec891a-4d57-4e39-8fe8-12ead374f51b',
       offeredItemsIds: [],
     },
   });
