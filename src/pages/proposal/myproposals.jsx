@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import {
   BadgeCheck,
@@ -11,18 +12,6 @@ import {
 import { ProposalList } from '@/components/ProposalList';
 import { ProposalModal } from '@/components/ProposalModal';
 import { useReceivedProposals } from '@/features/proposal/hooks/use-proposals';
-
-const statusStyles = {
-  Pendente: 'bg-yellow-100 text-yellow-800',
-  Aceita: 'bg-green-100 text-green-800',
-  Recusada: 'bg-red-100 text-red-800',
-};
-
-const statusIcons = {
-  Pendente: <Clock className="w-4 h-4" />,
-  Aceita: <BadgeCheck className="w-4 h-4" />,
-  Recusada: <XCircle className="w-4 h-4" />,
-};
 
 export function PaginaPropostas() {
   const [abaSelecionada, setAbaSelecionada] = useState('realizadas');
