@@ -6,17 +6,16 @@ export function useUpdateUser() {
   //const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (userData) => {
-      console.log(
-        'Atualizando usuário com ID:',
-        userData.userId,
-        'e dados:',
-        userData
-      );
-      updateUser(userData);
-    },
-    onSuccess: (data) => {
+    mutationFn: (userData) => updateUser(userData),
+    onSuccess: () => {
       toast.success('Perfil atualizado com sucesso!', {
+        richColors: true,
+      });
+    },
+    onError: (error) => {
+      const { error: message } = error.response?.data || {};
+      console.log('Erro ao atualizar perfil:', error);
+      toast.error(message || 'Erro ao atualizar perfil. Tente novamente.', {
         richColors: true,
       });
     },

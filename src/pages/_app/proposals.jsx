@@ -38,8 +38,8 @@ export function ProposalPage() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl p-8 ">
-        <div className="mb-8 justify-center text-center items-center">
-          <div className="mb-4 flex justify-center items-center">
+        <div className="mb-8 items-center justify-center text-center">
+          <div className="mb-4 flex items-center justify-center">
             <div className="rounded-full bg-blue-500 p-4 text-white">
               <ArrowRight className="h-6 w-6" />
             </div>

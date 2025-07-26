@@ -4,14 +4,14 @@ import {
   fetchUserProposals,
 } from '@/services/proposal-service';
 
-export function useProposals(userId) {
+export function useProposals() {
   const queryClient = useQueryClient();
 
   return useQuery({
-    queryKey: ['proposals', userId],
-    queryFn: () => fetchUserProposals(userId),
+    queryKey: ['proposals'],
+    queryFn: () => fetchUserProposals(),
     onSuccess: (data) => {
-      queryClient.setQueryData(['proposals', userId], data);
+      queryClient.setQueryData(['proposals'], data);
     },
     keepPreviousData: true,
   });
@@ -22,7 +22,7 @@ export function useReceivedProposals() {
 
   return useQuery({
     queryKey: ['receivedProposals'],
-    queryFn: () => fetchReceivedProposals(userId),
+    queryFn: () => fetchReceivedProposals(),
     onSuccess: (data) => {
       queryClient.setQueryData(['receivedProposals'], data);
     },
