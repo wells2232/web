@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, LoaderCircleIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { useUserItems } from '@/features/items/hooks/use-items';
 import { useCreateProposal } from '@/features/proposal/hooks/use-create-proposal';
 import { proposalFormSchema } from '@/lib/form-schemas';
@@ -104,7 +103,7 @@ export default function CreateProposalForm({ onSuccess, itemId }) {
               <FormLabel>Mensagem</FormLabel>
               <FormControl>
                 <textarea
-                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors  focus:outline-none"
+                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors focus:outline-none"
                   maxLength={200}
                   placeholder="Mensagem"
                   {...field}

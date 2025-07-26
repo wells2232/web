@@ -1,12 +1,5 @@
 /** biome-ignore-all lint/style/useFilenamingConvention: <explanation> */
-import {
-  BadgeCheck,
-  Calendar,
-  Clock,
-  Target,
-  XCircle,
-  UserRound,
-} from 'lucide-react';
+import { BadgeCheck, Calendar, Clock, UserRound, XCircle } from 'lucide-react';
 
 const statusStyles = {
   Pendente: 'text-yellow-700 bg-yellow-100',
@@ -29,9 +22,16 @@ export function ProposalCard({ proposal, onClick }) {
 
   return (
     <div className="items-center justify-center">
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: <> */}
+      {/** biome-ignore lint/nursery/noNoninteractiveElementInteractions: <> */}
       <div
-        className="w-80 mx-auto rounded-xl border border-gray-200 bg-white p-6 shadow-md"
+        className="mx-auto w-80 rounded-xl border border-gray-200 bg-white p-6 shadow-md"
         onClick={() => onClick(proposal)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClick(proposal);
+          }
+        }}
       >
         {/* Status e Data */}
         <div className="mb-4 flex items-center justify-between">
@@ -49,7 +49,7 @@ export function ProposalCard({ proposal, onClick }) {
           </div>
         </div>
         {/* Nome e tipo da proposta */}
-        <div className="mb-4 mt-4 flex items-center gap-3">
+        <div className="mt-4 mb-4 flex items-center gap-3">
           <UserRound />
           <div>
             <p className="font-semibold text-gray-800">
@@ -62,11 +62,11 @@ export function ProposalCard({ proposal, onClick }) {
         </div>
 
         {/* Itens da troca */}
-        <div className="mb-4 rounded-xl bg-gray-50 p-4 min-h-[270px] max-h-[250px] overflow-y-auto">
-          <h4 className="font-bold font-xl mb-3">Item Oferecido:</h4>
+        <div className="mb-4 max-h-[250px] min-h-[270px] overflow-y-auto rounded-xl bg-gray-50 p-4">
+          <h4 className="mb-3 font-bold font-xl">Item Oferecido:</h4>
           <div className="flex flex-row flex-wrap justify-start">
             {proposal.offeredItems.map((item) => (
-              <div className="flex items-center mb-2 gap-3" key={item.id}>
+              <div className="mb-2 flex items-center gap-3" key={item.id}>
                 <picture className="">
                   <img
                     alt={item.itemName}
@@ -84,8 +84,8 @@ export function ProposalCard({ proposal, onClick }) {
           </div>
 
           <div className="flex flex-row flex-wrap">
-            <h4 className="font-bold font-xl mb-3 mt-4">Item Requisitado:</h4>
-            <div className="flex flex-row  items-center gap-3">
+            <h4 className="mt-4 mb-3 font-bold font-xl">Item Requisitado:</h4>
+            <div className="flex flex-row items-center gap-3">
               <picture>
                 <img
                   alt={proposal.targetItem.itemName}

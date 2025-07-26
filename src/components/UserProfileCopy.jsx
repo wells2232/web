@@ -55,13 +55,6 @@ export function UserProfileCopy() {
     updateUserMutation.mutateAsync(data);
   };
 
-  if (updateUserMutation.isError) {
-    toast.error('Erro ao atualizar perfil!', {
-      duration: 2000,
-      richColors: true,
-    });
-  }
-
   const handlePasswordSubmit = (e) => {
     e.preventDefault();
     console.log('Senha alterada com sucesso!');
