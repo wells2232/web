@@ -2,18 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SelectTrigger, SelectValue } from '@radix-ui/react-select';
 import { LoaderCircleIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { useCreateItem } from '@/features/items/hooks/use-create-item';
 import { useItemFormData } from '@/features/items/hooks/use-item-formdata';
 import { itemFormSchema } from '@/lib/form-schemas';
 import { Checkbox } from './ui/checkbox';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from './ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form';
 import { Label } from './ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Select, SelectContent, SelectItem } from './ui/select';
@@ -34,12 +28,22 @@ export default function CreateItemForm({ onSuccess }) {
     },
   });
 
-  const { register, handleSubmit, watch, setValue } = form;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = form;
 
   const selectedCategoryIds = watch('categoryIds') ?? [];
 
   const onSubmit = (data) => {
-    createItemMutation.mutate(data);
+    createItemMutation.mutateAsync(data).finally(() => {
+      toast.success('Item criado com sucesso!', {
+        duration: 2000,
+      });
+    });
   };
 
   if (createItemMutation.isSuccess) {
@@ -65,7 +69,7 @@ export default function CreateItemForm({ onSuccess }) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome do Item</FormLabel>
+              <h3 className="text-gray-700">Descrição</h3>
               <FormControl>
                 <input
                   className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors  focus:outline-none"
@@ -85,7 +89,7 @@ export default function CreateItemForm({ onSuccess }) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descrição</FormLabel>
+              <h3 className="text-gray-700">Descrição</h3>
               <FormControl>
                 <textarea
                   className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors focus:border-indigo-600 focus:outline-none"
@@ -105,7 +109,7 @@ export default function CreateItemForm({ onSuccess }) {
           name="imageFile"
           render={({ field: { onChange } }) => (
             <FormItem>
-              <FormLabel>Imagem</FormLabel>
+              <h3 className="text-gray-700">Imagem</h3>
               <FormControl>
                 <input
                   accept="image/*"
@@ -128,7 +132,7 @@ export default function CreateItemForm({ onSuccess }) {
           name="conditionId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Condição do Item</FormLabel>
+              <h3 className="text-gray-700">Condição do Item</h3>
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="w-1/2 rounded-lg border-2 border-gray-200 bg-white p-2 pl-4 text-left text-zinc-900">
@@ -150,7 +154,7 @@ export default function CreateItemForm({ onSuccess }) {
 
         <div className="max-w-sm">
           <Popover>
-            <FormLabel>Categorias</FormLabel>
+            <h3 className="text-gray-700">Categorias</h3>
 
             <PopoverTrigger asChild>
               <button
@@ -163,6 +167,11 @@ export default function CreateItemForm({ onSuccess }) {
                   : 'Selecione categorias'}
               </button>
             </PopoverTrigger>
+            {errors.categoryIds && (
+              <p className="mt-1 font-semibold text-red-500 text-sm">
+                {errors.categoryIds.message}
+              </p>
+            )}
 
             <PopoverContent className="w-full">
               <div className="flex flex-col gap-2">
@@ -182,7 +191,7 @@ export default function CreateItemForm({ onSuccess }) {
         </div>
 
         <button
-          className="w-full transform rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-lg text-white transition-colors hover:scale-105 hover:bg-indigo-700"
+          className="w-full transform rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-lg text-white transition-colors hover:bg-indigo-700"
           disabled={createItemMutation.isPending}
           type="submit"
         >

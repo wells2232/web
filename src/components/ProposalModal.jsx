@@ -1,10 +1,12 @@
 import { MoveRight, User } from 'lucide-react';
 import { useAcceptProposal } from '@/features/proposal/hooks/use-accept-proposal';
+import { useAuthStore } from '@/stores/use-auth-store';
 import ItemConditionBadge from './item-condition-badge';
 import Modal from './modal';
 
 export function ProposalModal({ onSuccess, proposal, isOpen, onClose }) {
   const acceptProposalMutation = useAcceptProposal({ onSuccess });
+  const { user } = useAuthStore();
 
   if (!(isOpen && proposal)) {
     return null;
@@ -115,22 +117,24 @@ export function ProposalModal({ onSuccess, proposal, isOpen, onClose }) {
         <p className="text-base text-gray-700">{proposal.message}</p>
       </div>
       {/* Botões */}
-      <div className="flex justify-end gap-4">
-        <button
-          className="rounded border border-red-500 px-6 py-2 text-red-600 transition hover:bg-red-600 hover:text-white"
-          onClick={onClose}
-          type="button"
-        >
-          Recusar Proposta
-        </button>
-        <button
-          className="rounded bg-green-600 px-6 py-2 text-white transition hover:bg-green-700"
-          onClick={() => handleAcceptProposal(proposal.id)}
-          type="button"
-        >
-          Aceitar Proposta
-        </button>
-      </div>
+      {proposal.proposer.id !== user.id && (
+        <div className="flex justify-end gap-4">
+          <button
+            className="rounded border border-red-500 px-6 py-2 text-red-600 transition hover:bg-red-600 hover:text-white"
+            onClick={onClose}
+            type="button"
+          >
+            Recusar Proposta
+          </button>
+          <button
+            className="rounded bg-green-600 px-6 py-2 text-white transition hover:bg-green-700"
+            onClick={() => handleAcceptProposal(proposal.id)}
+            type="button"
+          >
+            Aceitar Proposta
+          </button>
+        </div>
+      )}
     </Modal>
   );
 }

@@ -21,7 +21,6 @@ const statusIcons = {
 };
 
 export function ProposalCard({ proposal, onClick }) {
-  // const [isOpen, setIsOpen] = useState(false);
   if (!proposal) {
     return null;
   }

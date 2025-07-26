@@ -23,7 +23,7 @@ export function RootComponent() {
     <div className="min-h-screen">
       <Outlet />
       <TanStackRouterDevtools position="bottom-right" />
-      <Toaster />
+      <Toaster position="top-center" theme="light" />
     </div>
   );
 }

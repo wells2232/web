@@ -32,3 +32,12 @@ export const acceptProposal = async (proposalId) => {
   );
   return response.data;
 };
+
+export const declineProposal = async (proposalId) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/proposals/decline/${proposalId}`,
+    {},
+    { withCredentials: true }
+  );
+  return response.data;
+};

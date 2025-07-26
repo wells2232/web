@@ -73,9 +73,7 @@ export function ItemDetailPage() {
             <div className="sticky top-12">
               {/* Card de Informações */}
               <div className="mb-6 rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-lg">
-                <h4 className="mb-4 font-medium text-gray-900">
-                  Informações Rápidas
-                </h4>
+                <h4 className="mb-4 font-medium text-gray-900">Informações</h4>
                 <div className="space-y-4">
                   <div>
                     <p className="text-gray-500 text-sm ">Categoria</p>
