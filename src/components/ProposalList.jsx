@@ -7,14 +7,16 @@ export function ProposalList({ proposals, onCardClick }) {
   const proposalsList = proposals.proposals || [];
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 ">
-      {proposalsList.map((proposal) => (
-        <ProposalCard
-          key={proposal.id}
-          onClick={onCardClick}
-          proposal={proposal}
-        />
-      ))}
+    <div className="w-full flex  justify-center content-center items-center self-center">
+      <div className="flex flex-row flex-wrap gap-6 p-6 max-w-6xl items-center justify-center">
+        {proposalsList.map((proposal) => (
+          <ProposalCard
+            key={proposal.id}
+            onClick={onCardClick}
+            proposal={proposal}
+          />
+        ))}
+      </div>
     </div>
   );
 }
