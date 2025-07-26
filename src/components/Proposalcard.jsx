@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/useFilenamingConvention: <explanation> */
 import { BadgeCheck, Calendar, Clock, UserRound, XCircle } from 'lucide-react';
 
 const statusStyles = {
