@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { acceptProposal } from '@/services/proposal-service';
+import { declineProposal } from '@/services/proposal-service';
 
-export const useAcceptProposal = ({ onSuccess }) => {
+export const useDeclineProposals = ({ onSuccess }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (proposalId) => acceptProposal(proposalId),
+    mutationFn: (proposalId) => declineProposal(proposalId),
     onSuccess: (data) => {
       queryClient.invalidateQueries(['receivedProposals']);
       queryClient.invalidateQueries(['proposals']);
