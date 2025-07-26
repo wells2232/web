@@ -38,8 +38,8 @@ export function ProposalPage() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl p-8 ">
-        <div className="mb-8 justify-center text-center">
-          <div className="mb-4 flex justify-center">
+        <div className="mb-8 justify-center text-center items-center">
+          <div className="mb-4 flex justify-center items-center">
             <div className="rounded-full bg-blue-500 p-4 text-white">
               <ArrowRight className="h-6 w-6" />
             </div>
@@ -67,7 +67,7 @@ export function ProposalPage() {
           >
             <Inbox className="h-4 w-4" /> Propostas Recebidas
             <span className="rounded-full bg-blue-100 px-2 py-0.5 font-bold text-blue-600 text-xs">
-              {receivedProposals?.totalItems}
+              {receivedProposals?.totalItems || 0}
             </span>
           </Button>
 
@@ -82,17 +82,35 @@ export function ProposalPage() {
           >
             <Send className="h-4 w-4" /> Propostas Realizadas
             <span className="rounded-full bg-blue-100 px-2 py-0.5 font-bold text-blue-600 text-xs">
-              {sentProposals?.totalItems}
+              {sentProposals?.totalItems || 0}
             </span>
           </Button>
         </div>
 
-        <h2 className="mb-1 font-bold text-xl">Propostas Realizadas</h2>
-        <p className="mb-4 text-gray-600">
-          Acompanhe o status das propostas que você enviou
-        </p>
+        <div className="items-center">
+          {abaSelecionada === 'realizadas' ? (
+            <>
+              <h2 className="mb-1 font-bold text-xl">Propostas Realizadas</h2>
+              <p className="mb-4 text-gray-600">
+                Acompanhe o status das propostas que você enviou
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="mb-1 font-bold text-xl">Propostas Recebidas</h2>
+              <p className="mb-4 text-gray-600">
+                Veja as propostas que você recebeu e escolha se quer aceitar ou
+                recusar
+              </p>
+              <ProposalList
+                onCardClick={handleCardClick}
+                proposals={proposals}
+              />
+            </>
+          )}
 
-        <ProposalList onCardClick={handleCardClick} proposals={proposals} />
+          <ProposalList onCardClick={handleCardClick} proposals={proposals} />
+        </div>
       </div>
 
       <ProposalModal

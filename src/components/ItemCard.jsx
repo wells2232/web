@@ -3,7 +3,7 @@ import ItemConditionBadge from './item-condition-badge';
 import { Badge } from './ui/badge';
 
 export default function ItemCard({ item, onClick }) {
-  const { imageUrl, itemName, condition, categories } = item;
+  const { imageUrl, itemName, condition, categories, id } = item;
   console.log('Categorias', categories);
 
   const primaryCategory = categories[0] || { name: 'Sem Categoria' };

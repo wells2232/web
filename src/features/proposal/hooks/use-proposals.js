@@ -22,7 +22,7 @@ export function useReceivedProposals() {
 
   return useQuery({
     queryKey: ['receivedProposals'],
-    queryFn: fetchReceivedProposals,
+    queryFn: () => fetchReceivedProposals(userId),
     onSuccess: (data) => {
       queryClient.setQueryData(['receivedProposals'], data);
     },
