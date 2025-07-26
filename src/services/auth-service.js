@@ -49,6 +49,15 @@ export const resetPassword = async (token, newPassword) => {
   return response.data;
 };
 
+export const changePassword = async (currentPassword, newPassword) => {
+  const response = await axios.patch(
+    `${API_URL}user/me/change-password`,
+    { currentPassword, newPassword },
+    { withCredentials: true }
+  );
+  return response.data;
+};
+
 export const updateUser = async (userData) => {
   const userId = userData.userId;
   const response = await axios.patch(
