@@ -5,9 +5,7 @@ const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 export const itemFormSchema = z.object({
   name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres.'),
-  description: z
-    .string()
-    .min(1, 'A descrição deve ter no mínimo 1 caracteres.'),
+  description: z.string().min(1, 'A descrição deve ter no mínimo 1 caractere.'),
   statusId: z.uuid().optional(),
   conditionId: z.uuid({ error: 'Condição é obrigatória' }),
   categoryIds: z.array(z.uuid()).min(1, 'Selecione pelo menos uma categoria.'),

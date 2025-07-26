@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoaderCircleIcon } from 'lucide-react';
+import { Check, LoaderCircleIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { useUserItems } from '@/features/items/hooks/use-items';
 import { useCreateProposal } from '@/features/proposal/hooks/use-create-proposal';
 import { proposalFormSchema } from '@/lib/form-schemas';
@@ -39,31 +40,13 @@ const ItemCard = ({ item, isSelected, toggleItem }) => {
     >
       <picture>
         <img
-          alt={item.name}
+          alt={item.itemName}
           className="mr-3 h-12 w-12 rounded-md object-cover"
           src={item.imageUrl}
         />
       </picture>
-      <span className="font-medium text-gray-800 text-sm">
-        {item.item_name}
-      </span>
-      {isSelected && (
-        <svg
-          className="ml-auto h-5 w-5 text-blue-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>Checkmark</title>
-          <path
-            d="M5 13l4 4L19 7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-          />
-        </svg>
-      )}
+      <span className="font-medium text-gray-800 text-sm">{item.itemName}</span>
+      {isSelected && <Check className="ml-auto h-5 w-5 text-blue-500" />}
     </button>
   );
 };
@@ -92,15 +75,8 @@ export default function CreateProposalForm({ onSuccess, itemId }) {
   const offeredItemsIds = watch('offeredItemsIds') ?? [];
 
   const onSubmit = (formData) => {
-    console.log('Submitting proposal with data:', formData);
     createProposalMutation.mutate(formData);
   };
-
-  if (createProposalMutation.isSuccess) {
-    return (
-      <div className="text-center text-green-600">Item criado com sucesso!</div>
-    );
-  }
 
   const toggleItem = (id) => {
     const alreadySelected = offeredItemsIds.includes(id);
@@ -141,11 +117,7 @@ export default function CreateProposalForm({ onSuccess, itemId }) {
 
         <div className="max-w-sm">
           <FormLabel>Items Oferecidos</FormLabel>
-          {errors.offeredItemsIds && (
-            <p className="mt-1 text-red-500 text-xs">
-              {errors.offeredItemsIds.message}
-            </p>
-          )}
+
           <Dialog>
             <DialogTrigger asChild>
               <button
@@ -203,6 +175,11 @@ export default function CreateProposalForm({ onSuccess, itemId }) {
               );
             })}
           </div>
+          {errors.offeredItemsIds && (
+            <p className="mt-1 text-red-500 text-xs">
+              {errors.offeredItemsIds.message}
+            </p>
+          )}
         </div>
 
         <button

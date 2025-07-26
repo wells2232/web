@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/style/useFilenamingConvention: <explanation> */
+
 import { BadgeCheck, Calendar, Clock, XCircle } from 'lucide-react';
 
 const statusStyles = {
@@ -14,7 +15,6 @@ const statusIcons = {
 };
 
 export function ProposalCard({ proposal, onClick }) {
-  // const [isOpen, setIsOpen] = useState(false);
   if (!proposal) {
     return null;
   }

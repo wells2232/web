@@ -21,6 +21,7 @@ export default function OpenFormButton({ form, itemId, className }) {
 
       {/* O Modal, que contém o formulário */}
       <Modal
+        className={form === 'Item' ? 'w-full max-w-lg' : 'w-full max-w-xl'}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={form === 'Item' ? 'Publicar Item' : 'Criar Proposta'}

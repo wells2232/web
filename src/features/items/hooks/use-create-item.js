@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import imageCompression from 'browser-image-compression';
+import { toast } from 'sonner';
 import { createItem } from '@/services/item-service';
 import {
   getCloudinarySignature,
@@ -43,7 +44,21 @@ export function useCreateItem({ onSuccess: onFormSuccess }) {
 
       if (onFormSuccess) {
         onFormSuccess();
+        toast.success('Item criado com sucesso!', {
+          duration: 2000,
+        });
       }
+    },
+    onError: (error) => {
+      const { message } = error.response?.data || {};
+      toast.error(message || 'Erro ao criar item. Tente novamente.', {
+        duration: 2000,
+        style: {
+          backgroundColor: 'rgb(107, 12, 12)', // Red background
+          color: '#ffffff', // White text
+          border: '1px solid rgb(0, 0, 0)', // Red border
+        },
+      });
     },
   });
 }
