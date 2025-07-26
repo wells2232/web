@@ -128,7 +128,7 @@ export default function CreateProposalForm({ onSuccess, itemId }) {
               <FormLabel>Mensagem</FormLabel>
               <FormControl>
                 <textarea
-                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors focus:border-indigo-600 focus:outline-none"
+                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors  focus:outline-none"
                   maxLength={200}
                   placeholder="Mensagem"
                   {...field}

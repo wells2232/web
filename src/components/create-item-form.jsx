@@ -68,7 +68,7 @@ export default function CreateItemForm({ onSuccess }) {
               <FormLabel>Nome do Item</FormLabel>
               <FormControl>
                 <input
-                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors focus:border-indigo-600 focus:outline-none"
+                  className="w-full rounded-lg border-2 border-gray-200 px-4 py-3 transition-colors  focus:outline-none"
                   placeholder="Nome do item"
                   type="text"
                   {...field}
